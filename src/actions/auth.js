@@ -372,7 +372,8 @@ export const handleRedirectResult = (dispatch, firebase, authData) => {
       email: user.email,
       displayName: user.providerData[0].displayName || user.email,
       avatarUrl: user.providerData[0].photoURL,
-      providerData: user.providerData
+      providerData: user.providerData,
+      credential: authData.credential
     })
   }
 }
@@ -468,6 +469,7 @@ export const login = (dispatch, firebase, credentials) => {
 
       // Create profile when logging in with external provider
       const user = userData.user || userData
+      const credential = userData.credential || {}
 
       return createUserProfile(
         dispatch,
@@ -477,7 +479,8 @@ export const login = (dispatch, firebase, credentials) => {
           email: user.email,
           displayName: user.providerData[0].displayName || user.email,
           avatarUrl: user.providerData[0].photoURL,
-          providerData: user.providerData
+          providerData: user.providerData,
+          credential
         }
       )
         .then((profile) => ({ profile, ...userData }))
